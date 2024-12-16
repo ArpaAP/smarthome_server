@@ -27,6 +27,8 @@ export class EventsGateway {
   handleMessage(@MessageBody() data: string): string {
     this.server.emit('message', data);
 
+    console.log(data);
+
     return 'Received ' + data;
   }
 
@@ -34,7 +36,11 @@ export class EventsGateway {
   async handleUpdateSensorMeasurements(
     @MessageBody() data: UpdateSensorMeasurementsDto,
   ) {
+    // remove null values
+    Object.keys(data).forEach((key) => data[key] == null && delete data[key]);
+
     console.log(data);
+
     await this.firestore.collection('sensorState').doc('current').set(data, {
       merge: true,
     });
