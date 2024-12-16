@@ -12,6 +12,9 @@ export class UpdateSensorMeasurementsDto {
 
   @IsNumber()
   dust?: number;
+
+  @IsBoolean()
+  pir?: boolean;
 }
 
 export class UpdateActionDto {
